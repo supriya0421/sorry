@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>I'm Sorry 💕</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            background: linear-gradient(135deg, #2d1b2e 0%, #1a0f1a 50%, #3d2240 100%);
+            font-family: 'Nunito', sans-serif;
+            text-align: center;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* Floating background orbs - romantic pinks & roses */
+        .orb {
+            position: fixed;
+            border-radius: 50%;
+            filter: blur(60px);
+            opacity: 0.45;
+            pointer-events: none;
+        }
+        .orb-1 { width: 200px; height: 200px; background: #e94560; top: 10%; left: 15%; animation: float 8s ease-in-out infinite; }
+        .orb-2 { width: 150px; height: 150px; background: #ff6b9d; bottom: 20%; right: 20%; animation: float 6s ease-in-out infinite reverse; animation-delay: 2s; }
+        .orb-3 { width: 100px; height: 100px; background: #c44569; top: 60%; left: 10%; animation: float 7s ease-in-out infinite; animation-delay: 1s; }
+
+        @keyframes float {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            50% { transform: translate(20px, -20px) scale(1.1); }
+        }
+
+        .card {
+            background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(12px);
+            border-radius: 24px;
+            padding: 2.5rem 3rem;
+            max-width: 420px;
+            border: 1px solid rgba(255, 182, 193, 0.2);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.4);
+            position: relative;
+            z-index: 1;
+            opacity: 0;
+            animation: cardIn 1s ease-out forwards;
+        }
+
+        @keyframes cardIn {
+            from {
+                opacity: 0;
+                transform: translateY(30px) scale(0.96);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        h1 {
+            font-size: 2.2rem;
+            font-weight: 700;
+            color: #fff;
+            margin: 0;
+            opacity: 0;
+            animation: fadeIn 0.8s ease-out 0.2s forwards;
+            letter-spacing: -0.02em;
+        }
+
+        h2 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: rgba(255, 255, 255, 0.9);
+            margin: 0.75rem 0 1.5rem;
+            opacity: 0;
+            animation: fadeIn 0.8s ease-out 0.5s forwards;
+        }
+
+        .gif-wrap {
+            width: 220px;
+            height: 220px;
+            margin: 0 auto 1.5rem;
+            border-radius: 16px;
+            overflow: hidden;
+            border: 3px solid rgba(255, 107, 157, 0.5);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            opacity: 0;
+            animation: fadeIn 0.8s ease-out 0.8s forwards;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            cursor: pointer;
+        }
+        .gif-wrap:hover {
+            transform: scale(1.05);
+            box-shadow: 0 15px 40px rgba(255, 107, 157, 0.3);
+        }
+        .gif-wrap img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        .buttons {
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+            flex-wrap: wrap;
+            opacity: 0;
+            animation: fadeIn 0.8s ease-out 1.1s forwards;
+        }
+
+        .btn {
+            font-family: 'Nunito', sans-serif;
+            font-size: 1rem;
+            font-weight: 700;
+            padding: 14px 28px;
+            border: none;
+            border-radius: 14px;
+            cursor: pointer;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+        .btn:hover {
+            transform: translateY(-2px);
+        }
+        .btn:active {
+            transform: translateY(0);
+        }
+
+        .btn-yes {
+            background: linear-gradient(135deg, #e94560, #ff6b9d);
+            color: white;
+            box-shadow: 0 4px 15px rgba(233, 69, 96, 0.5);
+        }
+        .btn-yes:hover {
+            box-shadow: 0 6px 20px rgba(255, 107, 157, 0.5);
+        }
+
+        .btn-no {
+            background: rgba(255, 255, 255, 0.12);
+            color: rgba(255, 255, 255, 0.9);
+            border: 2px solid rgba(255, 255, 255, 0.3);
+        }
+        .btn-no:hover {
+            background: rgba(255, 255, 255, 0.18);
+        }
+
+        .response-msg {
+            margin-top: 1.25rem;
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #ffb3c6;
+            min-height: 1.5em;
+            opacity: 0;
+            transform: translateY(10px);
+            transition: opacity 0.4s ease, transform 0.4s ease;
+        }
+        .response-msg.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .response-msg.thanks {
+            color: #ffb3c6;
+            font-size: 1.2rem;
+        }
+
+        @keyframes fadeIn {
+            to { opacity: 1; }
+        }
+
+        .confetti {
+            position: fixed;
+            width: 10px;
+            height: 10px;
+            pointer-events: none;
+            z-index: 100;
+        }
+        .cry-confetti {
+            position: fixed;
+            pointer-events: none;
+            z-index: 100;
+            font-size: 28px;
+            line-height: 1;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+    <div class="orb orb-3"></div>
+
+    <div class="card">
+        <h1>I'm sorry, fuccchiiii. 💕</h1>
+        <h2> I'll do better, I promise I'll try 😝</h2>
+
+        <div class="gif-wrap" title="I'm really sorry">
+            <img src="https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExM2hreWNpOWllY3hmZnE2M2s4cG80cjhpdzZnbHd2bGJueWpvNXJtdCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/5Gb6pmAu8o0Ba/giphy.gif"
+                 alt="I'm really sorry">
+        </div>
+
+        <p class="response-msg" id="response"></p>
+
+        <div class="buttons">
+            <button class="btn btn-yes" id="btnYes">Forgive me? 💕</button>
+            <button class="btn btn-no" id="btnNo">I'm still upset...</button>
+        </div>
+    </div>
+
+    <script>
+        const responseEl = document.getElementById('response');
+        const btnYes = document.getElementById('btnYes');
+        const btnNo = document.getElementById('btnNo');
+
+        const thanksMessages = [
+            "I love you (maybe not)",
+            "You're my favorite person. Thank you 😭",
+            "Best boyfriend ever. I don't deserve you 💕",
+            "I'll make it up to you, promise 🤗"
+        ];
+
+        let noClicks = 0;
+        const noMessages = [
+            " I'll wait for you (maybe not) 💕",
+            "Take your time. I'm not going anywhere. (who knows?)",
+            "Okay... I miss you though 😢",
+            "Please? I'm really sorry yaar 💕",
+            "Fucccchiiiii !! Rulaogi kya ??",
+            "esa mat kar. ro dungi",
+            "Baat mat kar",
+            "Pitega tu",
+            "You want chocolates?? 🍫🍫🍫"
+        ];
+
+        btnYes.addEventListener('click', () => {
+            responseEl.textContent = thanksMessages[Math.floor(Math.random() * thanksMessages.length)];
+            responseEl.classList.add('visible', 'thanks');
+            createConfetti();
+            btnYes.textContent = "I forgive you 💕";
+        });
+
+        btnNo.addEventListener('click', () => {
+            responseEl.textContent = noMessages[Math.min(noClicks, noMessages.length - 1)];
+            responseEl.classList.add('visible');
+            responseEl.classList.remove('thanks');
+            createCryingConfetti();
+            noClicks++;
+            if (noClicks >= noMessages.length) noClicks = 0;
+        });
+
+        function createCryingConfetti() {
+            const emojis = ['😢', '😭', '🥺', '😿'];
+            const maxDist = Math.max(window.innerWidth, window.innerHeight) * 0.8;
+            const count = 60;
+            for (let i = 0; i < count; i++) {
+                const c = document.createElement('span');
+                c.className = 'cry-confetti';
+                c.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+                c.style.left = '50%';
+                c.style.top = '50%';
+                c.style.transform = 'translate(-50%, -50%)';
+                document.body.appendChild(c);
+
+                const angle = (Math.PI * 2 * i) / count + Math.random() * 0.5;
+                const velocity = maxDist * (0.5 + Math.random() * 0.5);
+                const tx = Math.cos(angle) * velocity;
+                const ty = Math.sin(angle) * velocity;
+
+                c.animate([
+                    { transform: 'translate(-50%, -50%) scale(1) rotate(0deg)', opacity: 1 },
+                    { transform: `translate(calc(-50% + ${tx}px), calc(-50% + ${ty}px)) scale(0.3) rotate(360deg)`, opacity: 0 }
+                ], { duration: 2200, easing: 'cubic-bezier(0.2, 0.8, 0.2, 1)' }).onfinish = () => c.remove();
+            }
+        }
+
+        function createConfetti() {
+            const colors = ['#e94560', '#ff6b9d', '#ffb3c6', '#c44569'];
+            const maxDist = Math.max(window.innerWidth, window.innerHeight) * 0.8;
+            const count = 100;
+            for (let i = 0; i < count; i++) {
+                const c = document.createElement('div');
+                c.className = 'confetti';
+                c.style.left = '50%';
+                c.style.top = '50%';
+                c.style.width = (6 + Math.random() * 8) + 'px';
+                c.style.height = (6 + Math.random() * 8) + 'px';
+                c.style.background = colors[Math.floor(Math.random() * colors.length)];
+                c.style.borderRadius = Math.random() > 0.5 ? '50%' : '0';
+                c.style.transform = `translate(-50%, -50%) rotate(${Math.random() * 360}deg)`;
+                document.body.appendChild(c);
+
+                const angle = (Math.PI * 2 * i) / count + Math.random() * 0.5;
+                const velocity = maxDist * (0.6 + Math.random() * 0.5);
+                const tx = Math.cos(angle) * velocity;
+                const ty = Math.sin(angle) * velocity;
+
+                c.animate([
+                    { transform: 'translate(-50%, -50%) scale(1) rotate(0deg)', opacity: 1 },
+                    { transform: `translate(calc(-50% + ${tx}px), calc(-50% + ${ty}px)) scale(0.2) rotate(720deg)`, opacity: 0 }
+                ], { duration: 2000, easing: 'cubic-bezier(0.2, 0.8, 0.2, 1)' }).onfinish = () => c.remove();
+            }
+        }
+    </script>
+</body>
+</html>
